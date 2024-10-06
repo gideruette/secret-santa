@@ -16,11 +16,19 @@
     <details>
       <summary><strong>Oui c'est moche, et alors ?</strong></summary>
       C'est utilisable, c'est le principal. On peut s'en servir sur mobile, ça
-      charge vite, ça ne récupère pas vos données, et ça ne vous envoie pas de
+      charge vite, ça ne récupère pas vos données, et ça ne t'envoie pas de
       spam. C'est pas si mal, non ?
       <br />
-      Si vous voulez améliorer le design, vous pouvez cloner le site et le
-      modifier à votre guise, je m'en fiche pas mal.
+      Si tu veux vérifier qu'il n'y a aucun appel réseau, tu peux ouvrir la
+      console et voir par toi-même, je m'en fous de ces données donc elles
+      restent sur ton navigateur.
+
+      <br />
+      Si tu veux améliorer le design, tu peux cloner le site et le modifier à
+      votre guise, je m'en fiche pas mal.
+      <a href="https://github.com/victordelajarte/secret-santa">
+        Voici le repo
+      </a>
     </details>
 
     <br />
@@ -51,6 +59,10 @@
   </body>
 
   <script>
+    console.log(
+      "Alors comme ça, petit fouineur, on essaie de voir le code source ? Vas y tu peux, c'est open source ! Le repo est ici si besoin, mais tout tient dans cette page HTML: https://github.com/victordelajarte/secret-santa"
+    );
+
     const form = document.getElementById("add-participant-form");
     const participantsInput = document.getElementById("add-participant-input");
     const resultList = document.getElementById("result-list");
