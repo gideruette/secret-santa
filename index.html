@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secret Santa - sans email ni rien</title>
+  </head>
+  <body>
+    <h1>Secret Santa: aucun email nécessaire, basique et rapide à utiliser</h1>
+    <details>
+      <summary><strong>Oui c'est moche, et alors ?</strong></summary>
+      C'est utilisable, c'est le principal. On peut s'en servir sur mobile, ça
+      charge vite, ça ne récupère pas vos données, et ça ne vous envoie pas de
+      spam. C'est pas si mal, non ?
+      <br />
+      Si vous voulez améliorer le design, vous pouvez cloner le site et le
+      modifier à votre guise, je m'en fiche pas mal.
+    </details>
+
+    <br />
+    <br />
+
+    <form id="add-participant-form">
+      <label for="participants"
+        >Ajouter un participant (attention à bien indiquer des noms différents
+        pour chacun)</label
+      >
+      <br />
+      <input
+        type="text"
+        name="participants"
+        id="add-participant-input"
+        autocomplete="off"
+      />
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <p id="participants-list"></p>
+
+    <br />
+    <br />
+    <button id="generate-pairs-button">Générer les paires</button>
+
+    <ul id="result-list"></ul>
+  </body>
+
+  <script>
+    const form = document.getElementById("add-participant-form");
+    const participantsInput = document.getElementById("add-participant-input");
+    const resultList = document.getElementById("result-list");
+    const generatePairsButton = document.getElementById(
+      "generate-pairs-button"
+    );
+    const participantsList = document.getElementById("participants-list");
+    const listFormatter = new Intl.ListFormat("fr", {
+      style: "long",
+      type: "conjunction",
+    });
+
+    const participants = [];
+
+    const shuffle = (array) => {
+      return [...array].sort(() => Math.random() - 0.5);
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      participants.push(participantsInput.value);
+      participantsInput.value = "";
+      participantsInput.focus();
+
+      participantsList.textContent = `Les participants sont: ${listFormatter.format(
+        participants
+      )}`;
+    });
+
+    /** Based on Hannah Fry's video: https://www.youtube.com/watch?v=5kC5k5QBqcc */
+    const generatePairs = () => {
+      const shuffledParticipants = shuffle(participants);
+      const pairs = shuffledParticipants.map((participant, index) => {
+        const nextIndex =
+          index + 1 === shuffledParticipants.length ? 0 : index + 1;
+        return {
+          giver: participant,
+          receiver: shuffledParticipants[nextIndex],
+        };
+      });
+
+      return pairs;
+    };
+
+    generatePairsButton.addEventListener("click", () => {
+      const pairs = generatePairs();
+      resultList.innerHTML = "";
+      pairs.forEach((pair) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${pair.giver} offre un cadeau à ${pair.receiver}`;
+        resultList.appendChild(listItem);
+      });
+    });
+  </script>
+</html>
